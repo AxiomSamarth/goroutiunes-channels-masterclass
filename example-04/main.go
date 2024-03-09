@@ -22,6 +22,11 @@ func receiver(message chan string) {
 func main() {
 	// Create a message channel and a done channel
 	message := make(chan string)
+	defer func() {
+		println("Closing the message channel")
+		close(message)
+	}()
+
 	done := make(chan struct{})
 
 	// Start the sender and receiver goroutines
@@ -32,11 +37,6 @@ func main() {
 
 	// Wait for the sender to finish sending messages
 	<-done
-
-	// Close the message channel. It is important to close the message channel
-	// to indicate that no more messages will be sent on the channel. This is
-	// necessary to avoid a deadlock in the receiver goroutine.
-	close(message)
 
 	// NOTE:
 	// If we do not use the done channel, it will result in the termination of this process
