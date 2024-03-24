@@ -1,0 +1,8 @@
+# vendored folders
+vendor/*
+
+# debug files
+__debug_*
+
+# .vscode configuration files
+.vscode/*
